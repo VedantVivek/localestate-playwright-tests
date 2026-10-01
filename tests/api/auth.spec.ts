@@ -1,9 +1,5 @@
 import { test, expect } from '@playwright/test';
-
-const DEMO_USER = {
-  email: process.env.DEMO_EMAIL ?? 'demo@localeestate.com',
-  password: process.env.DEMO_PASSWORD ?? 'demo1234',
-};
+import { DEMO_USER } from '../../test-data/users';
 
 test.describe('Auth API', () => {
   test('gives the same error for a wrong password and an unknown email', { tag: '@regression' }, async ({ request }) => {
