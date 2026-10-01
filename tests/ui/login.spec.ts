@@ -14,10 +14,18 @@ test.describe('Sign in', () => {
     await expect(authPanel.userName).toBeHidden();
   });
 
-  test('signs in with the demo account', { tag: '@regression' }, async ({ authPanel }) => {
+  test('signs in with the demo account and signs out again', { tag: '@regression' }, async ({ authPanel }) => {
     await authPanel.signIn(DEMO_USER.email, DEMO_USER.password);
+    await expect(authPanel.popupTitle).toHaveText('Signed in');
+    await authPanel.dismissPopup();
     await expect(authPanel.userName).toBeVisible();
     await expect(authPanel.userName).not.toBeEmpty();
     await expect(authPanel.headerButton).toHaveText('Sign out');
+
+    await authPanel.signOut();
+    await expect(authPanel.popupTitle).toHaveText('Signed out');
+    await authPanel.dismissPopup();
+    await expect(authPanel.headerButton).toHaveText('Sign in');
+    await expect(authPanel.userName).toBeHidden();
   });
 });

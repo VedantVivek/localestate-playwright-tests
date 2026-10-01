@@ -16,7 +16,7 @@ Built with **Playwright + TypeScript**, running on every push through **GitHub A
 | Auth API | Wrong password and unknown email give the same error, protected routes need a valid token, full sign-in → profile → sign-out lifecycle | 5 |
 | Home page (UI) | Page loads with the right title | 1 |
 | Property board (UI) | Listing count is shown, city search narrows results, empty search shows a clear message | 3 |
-| Sign in (UI) | Wrong password shows an error, demo account signs in | 2 |
+| Sign in (UI) | Wrong password shows an error, demo account signs in and signs out | 2 |
 
 **24 tests in total**, tagged `@smoke`, `@regression` or `@known-bug`.
 
