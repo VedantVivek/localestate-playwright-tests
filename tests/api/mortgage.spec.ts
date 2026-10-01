@@ -44,7 +44,7 @@ test.describe('Mortgage API', () => {
 
   test('respects a 0% down payment', {
     tag: '@known-bug',
-    annotation: { type: 'bug', description: 'Number(down) || 20 turns 0 into the default 20' },
+    annotation: { type: 'issue', description: 'https://github.com/VedantVivek/localEstate/issues/1' },
   }, async ({ request }) => {
     test.fail();
     const response = await request.post('/api/mortgage', { data: { price: 500000, down: 0 } });
@@ -54,7 +54,7 @@ test.describe('Mortgage API', () => {
 
   test('supports a 0% interest rate', {
     tag: '@known-bug',
-    annotation: { type: 'bug', description: 'Number(rate) || 6.5 turns 0 into the default 6.5' },
+    annotation: { type: 'issue', description: 'https://github.com/VedantVivek/localEstate/issues/2' },
   }, async ({ request }) => {
     test.fail();
     const response = await request.post('/api/mortgage', {

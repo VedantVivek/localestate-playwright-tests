@@ -22,8 +22,8 @@ Built with **Playwright + TypeScript**, running on every push through **GitHub A
 
 ## Bugs found
 
-- **0% down payment is ignored.** The API uses `Number(down) || 20`, and since `0` is falsy in JavaScript, a 0% down payment silently becomes 20%.
-- **0% interest rate is ignored.** Same pattern with `Number(rate) || 6.5`, which also makes the zero-rate branch of the formula unreachable.
+- **0% down payment is ignored** ([issue #1](https://github.com/VedantVivek/localEstate/issues/1)). The API uses `Number(down) || 20`, and since `0` is falsy in JavaScript, a 0% down payment silently becomes 20%.
+- **0% interest rate is ignored** ([issue #2](https://github.com/VedantVivek/localEstate/issues/2)). Same pattern with `Number(rate) || 6.5`, which also makes the zero-rate branch of the formula unreachable.
 - **Stale production URL.** While setting up the suite, the old live URL returned Vercel's `DEPLOYMENT_NOT_FOUND`. The links were moved to the working deployment.
 
 The first two are kept as `@known-bug` tests using `test.fail()`. They document the current behaviour and will flag automatically once the bugs are fixed.
