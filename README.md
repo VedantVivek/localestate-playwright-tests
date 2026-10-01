@@ -4,7 +4,7 @@
 
 End-to-end UI and API test automation for [LocalEstate](https://github.com/VedantVivek/localEstate), a full-stack real-estate app built with Express and MongoDB and deployed on Vercel ([live demo](https://local-estate-main.vercel.app)).
 
-Built with **Playwright + TypeScript**, running on every push through **GitHub Actions**.
+Built with **Playwright + TypeScript**, running on every push and pull request through **GitHub Actions**.
 
 ## What's covered
 
@@ -12,13 +12,13 @@ Built with **Playwright + TypeScript**, running on every push through **GitHub A
 |---|---|---|
 | Health API | Service and database are up, core features are enabled | 2 |
 | Properties API | List is returned, every property has its core fields, ids are unique | 3 |
-| Mortgage API | Correct monthly payment, default values, invalid and missing input is rejected | 8 |
-| Auth API | Wrong password and unknown email give the same error, protected routes need a valid token, full sign-in → profile → sign-out lifecycle | 5 |
-| Home page (UI) | Page loads with the right title | 1 |
+| Mortgage API | Correct monthly payment, default values, invalid and missing input is rejected, plus two known bugs | 8 |
+| Auth API | Wrong password and unknown email give the same error, an empty request does not crash the server, protected routes need a valid token, full sign-in → profile → sign-out lifecycle | 5 |
+| Home page (UI) | Page loads with the app's `LocaleEstate` title | 1 |
 | Property board (UI) | Listing count is shown, city search narrows results, empty search shows a clear message | 3 |
-| Sign in (UI) | Wrong password shows an error, demo account signs in and signs out | 2 |
+| Sign in (UI) | Wrong password shows an error, demo account signs in and signs out, confirmation messages are shown | 2 |
 
-**24 tests in total**, tagged `@smoke`, `@regression` or `@known-bug`.
+**24 tests in total:** 6 `@smoke`, 16 `@regression` and 2 `@known-bug`.
 
 ## Bugs found
 
@@ -26,14 +26,15 @@ Built with **Playwright + TypeScript**, running on every push through **GitHub A
 - **0% interest rate is ignored** ([issue #2](https://github.com/VedantVivek/localEstate/issues/2)). Same pattern with `Number(rate) || 6.5`, which also makes the zero-rate branch of the formula unreachable.
 - **Stale production URL.** While setting up the suite, the old live URL returned Vercel's `DEPLOYMENT_NOT_FOUND`. The links were moved to the working deployment.
 
-The first two are kept as `@known-bug` tests using `test.fail()`. They document the current behaviour and will flag automatically once the bugs are fixed.
+The first two are kept as `@known-bug` tests using `test.fail()`. They show up as expected failures, document the current behaviour, and will flag automatically once the bugs are fixed.
 
 ## Test design
 
 - **Page Object Model** for UI tests (`pages/`), so selectors live in one place.
 - **Custom fixtures** (`fixtures/pages.ts`) inject page objects into tests.
 - **Shared test data** (`test-data/`), with credentials overridable through environment variables.
-- **Network-aware waits.** The backend is serverless and can be slow on a cold start, so UI tests wait for the actual API response instead of fixed delays. Stability was checked with `--repeat-each`.
+- **No fixed delays.** The backend is serverless and can be slow on a cold start. Searches wait for the actual API response, the first page load gets a longer timeout, and stability was checked with `--repeat-each`.
+- **Popups handled like a user would.** The app shows a confirmation popup after sign-in and sign-out. The page object dismisses it, and the test checks the message shown.
 - **Safe against production.** Tests that run on the live site only read data or clean up after themselves (sign-in is followed by sign-out). Flows that create data, like registration, tours and reviews, are planned for a local environment.
 - **Minimal side effects.** A successful sign-in sends emails in this app, so the suite keeps real sign-ins to a minimum.
 
@@ -48,8 +49,8 @@ npm test
 Useful variations:
 
 ```bash
-npm run test:smoke                                  # quick smoke run
-npm run test:regression                             # full regression run
+npm run test:smoke                                  # smoke tests only
+npm run test:regression                             # regression tests only
 BASE_URL=http://localhost:3000 npm test             # run against a local instance
 npm run report                                      # open the HTML report
 ```

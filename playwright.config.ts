@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-        baseURL: process.env.BASE_URL || 'https://local-estate-main.vercel.app',
+    baseURL: process.env.BASE_URL || 'https://local-estate-main.vercel.app',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
