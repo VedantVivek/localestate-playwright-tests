@@ -42,15 +42,16 @@ The first two are kept as `@known-bug` tests using `test.fail()`. They document 
 ```bash
 npm ci
 npx playwright install --with-deps chromium
-npx playwright test
+npm test
 ```
 
 Useful variations:
 
 ```bash
-npx playwright test --grep @smoke                              # quick smoke run
-BASE_URL=http://localhost:3000 npx playwright test             # run against a local instance
-npx playwright show-report                                     # open the HTML report
+npm run test:smoke                                  # quick smoke run
+npm run test:regression                             # full regression run
+BASE_URL=http://localhost:3000 npm test             # run against a local instance
+npm run report                                      # open the HTML report
 ```
 
 ## CI

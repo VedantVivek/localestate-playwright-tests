@@ -1,16 +1,20 @@
 {
   "name": "localestate-playwright-tests",
   "version": "1.0.0",
-  "description": "Playwright + TypeScript test automation for the LocalEstate app.",
-  "main": "index.js",
-  "scripts": {},
+  "description": "Playwright + TypeScript UI and API tests for the LocalEstate app",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "report": "playwright show-report"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VedantVivek/localestate-playwright-tests.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Vedant Vivek",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/VedantVivek/localestate-playwright-tests/issues"
