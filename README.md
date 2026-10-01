@@ -56,7 +56,7 @@ npm run report                                      # open the HTML report
 
 ## CI
 
-GitHub Actions runs the suite on every push and pull request to `main`, and can be triggered manually. It installs only Chromium, which cut the pipeline from about 16 minutes to about 3 minutes. The HTML report is uploaded as a build artifact, and traces and screenshots are kept for failed tests.
+GitHub Actions runs the suite on every push and pull request to `main`, and can be triggered manually. It installs only Chromium, which cut the first run from about 16 minutes to under a minute. With the full suite, a run now takes a few minutes. The HTML report is uploaded as a build artifact, and traces and screenshots are kept for failed tests.
 
 ## Project structure
 
