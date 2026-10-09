@@ -28,3 +28,13 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+  docker:
+    needs: test
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build test image
+        run: docker build -t localestate-tests .
+      - name: Run tests in container
+        run: docker run --rm --init --ipc=host -e CI=true localestate-tests
