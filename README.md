@@ -55,6 +55,16 @@ BASE_URL=http://localhost:3000 npm test             # run against a local instan
 npm run report                                      # open the HTML report
 ```
 
+## Running with Docker
+
+The suite also runs inside the official Playwright image, so browsers and system dependencies are identical on every machine.
+
+```bash
+npm run test:docker
+```
+
+This builds the image from the `Dockerfile`, runs the full suite in a container, and writes the HTML report to `playwright-report/` on the host. In CI, the same image runs after the standard job passes.
+
 ## CI
 
 GitHub Actions runs the suite on every push and pull request to `main`, and can be triggered manually. It installs only Chromium, which cut the first run from about 16 minutes to under a minute. With the full suite, a run now takes a few minutes. The HTML report is uploaded as a build artifact, and traces and screenshots are kept for failed tests.
@@ -74,7 +84,7 @@ GitHub Actions runs the suite on every push and pull request to `main`, and can 
 
 ## Next steps
 
-- Docker setup to run the app and MongoDB locally, for tests that create data
+- Docker Compose setup to run the app and MongoDB locally, for tests that create data
 - Allure report published to GitHub Pages
 - API schema validation
 - UI test for the mortgage calculator
